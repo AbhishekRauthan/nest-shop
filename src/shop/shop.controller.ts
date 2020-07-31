@@ -11,6 +11,8 @@ export class ShopController {
   @Render('shop')
   mainPage() {
     const products:string[] = this.appService.getAllProducts();
+    console.log(products);
+    
     return {
       pageTitle:'Shop',
       prods: products,

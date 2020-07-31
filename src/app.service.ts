@@ -2,14 +2,16 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  private products:string[] = [];
-  
-  getAllProducts():string[] {
+  products: string[] = [];
+
+  addProduct(product: string): void {
+    console.log('inside service: ', product);
+    this.products.push(product);
+  }
+
+  getAllProducts(): string[] {
+    console.log('inside service: ', this.products);
     return this.products
   }
 
-  addProduct(title:string):void {
-    this.products.push(title);
-  }
-  
 }

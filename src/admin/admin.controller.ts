@@ -19,9 +19,9 @@ export class AdminController {
 
   @Post('/add-product')
   addProduct(@Body() body, @Res() res: Response) {
-    console.log("body", body);
-    const title:string = { ...body }
-    this.appService.addProduct(title);
+    const product:string = body.title
+    console.log('product', product);
+    this.appService.addProduct(product);
     res.redirect('/');
   }
 }
