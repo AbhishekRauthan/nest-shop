@@ -2,8 +2,14 @@ const products:Products[] = []
 
 export class Products {
   private title: string;
-  constructor(t: string) {
-    this.title = t;
+  private imageUrl:string;
+  private description:string;
+  private price:number;
+  constructor(title: string, imageUrl:string, description:string, price:number) {
+    this.title = title;
+    this.imageUrl = imageUrl;
+    this.description = description;
+    this.price = price;
   }
 
   save() {

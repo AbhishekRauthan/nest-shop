@@ -18,12 +18,23 @@ export class AdminController {
   }
 
   @Get('products')
+  @Render('admin/products')
+  getProducts() {
+    const products = Products.fetchAll()
+    return {
+      prods: products,
+      pageTitle: 'Admin Products',
+      path: '/admin/products'
+    }
+  };
+
 
   @Post('/add-product')
   addProduct(@Body() body, @Res() res: Response) {
-    const product: string = body.title
-    console.log('product', product);
-    const prod = new Products(product).save();
+    const { title, imageUrl, description, price } = body;
+    const product = new Products(title, imageUrl, description, price);
+    console.log('products', product);
+    product.save();
     res.redirect('/');
   }
 }
