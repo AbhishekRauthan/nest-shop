@@ -1,15 +1,12 @@
 import { Controller, Get, Render } from '@nestjs/common';
-import { AppService } from 'src/app.service';
 import { Products } from 'src/products';
 
 @Controller('')
 export class ShopController {
-  constructor(private appService:AppService) {
-    
-  }
+  constructor() { }
   
   @Get()
-  @Render('shop')
+  @Render('shop/product-list')
   mainPage() {
     const products = Products.fetchAll();
     console.log(products);
@@ -19,4 +16,10 @@ export class ShopController {
       path:'/'
     }
   }
+
+  // @Get('product')
+
+  // @Get('cart')
+
+  // @Get('checkout')
 }
