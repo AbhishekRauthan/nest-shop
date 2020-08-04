@@ -45,7 +45,7 @@ export class ShopController {
     }
   }
 
-  @Get('order')
+  @Get('orders')
   @Render('shop/orders')
   getOrders() {
     return {

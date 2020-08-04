@@ -17,7 +17,7 @@ export class AdminController {
     }
   }
 
-  @Get('products')
+  @Get('/products')
   @Render('admin/products')
   getProducts() {
     const products = Products.fetchAll()
