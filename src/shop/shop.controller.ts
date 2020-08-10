@@ -1,5 +1,5 @@
-import { Controller, Get, Render } from '@nestjs/common';
-import { Products } from 'src/products';
+import { Controller, Get, Render, Param, Post, Body } from '@nestjs/common';
+import { Products } from 'src/models/products';
 
 @Controller('')
 export class ShopController {
@@ -18,11 +18,22 @@ export class ShopController {
 
   @Get('products')
   @Render('shop/product-list')
-  getProduct() {
+  getAllProducts() {
     const products = Products.fetchAll();
     return {
       pageTitle: 'Shop',
       prods: products,
+      path: '/products'
+    }
+  }
+
+  @Get('products/:id')
+  @Render('shop/product-detail')
+  getProduct(@Param('id') productId: string) {
+    const product = Products.getById(productId);
+    return {
+      pageTitle: 'Shop',
+      prod: product,
       path: '/products'
     }
   }
@@ -34,6 +45,11 @@ export class ShopController {
       pageTitle: 'Your Cart',
       path: '/cart'
     }
+  }
+
+  @Post('cart')
+  addToCart(@Body('productId') id: string) {
+    console.log(id);
   }
 
   @Get('checkout')

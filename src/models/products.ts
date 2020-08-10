@@ -21,4 +21,8 @@ export class Products {
   static fetchAll() {
     return products;
   }
+  
+  static getById(id:string) {
+    return products.find(prod => prod.id === id);
+  }
 }
