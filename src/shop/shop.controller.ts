@@ -1,5 +1,7 @@
-import { Controller, Get, Render, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Render, Param, Post, Body, Res } from '@nestjs/common';
 import { Products } from 'src/models/products';
+import {Cart} from 'src/models/cart'
+import { Response } from 'express';
 
 @Controller('')
 export class ShopController {
@@ -48,8 +50,10 @@ export class ShopController {
   }
 
   @Post('cart')
-  addToCart(@Body('productId') id: string) {
-    console.log(id);
+  addToCart(@Body('productId') id: string, @Res() res:Response) {
+    const product = Products.getById(id);
+    Cart.addToCart(id, product.price);
+    res.redirect('/cart');
   }
 
   @Get('checkout')

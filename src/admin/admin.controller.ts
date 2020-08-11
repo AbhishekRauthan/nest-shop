@@ -1,4 +1,4 @@
-import { Controller, Get, Render, Post, Body, Res } from '@nestjs/common';
+import { Controller, Get, Render, Post, Body, Res, Param } from '@nestjs/common';
 import { Response } from 'express';
 import { Products } from 'src/models/products';
 
@@ -26,8 +26,22 @@ export class AdminController {
       pageTitle: 'Admin Products',
       path: '/admin/products'
     }
-  };
+  }
 
+  @Get('/edit-product/:productId')
+  @Render('admin/edit-product')
+  editProductPage(@Param('productId') prodId:string, @Res() res:Response) {
+    const prod = Products.getById(prodId);
+    if(prod){
+      return {
+        pageTitle: 'Edit Product',
+        path: '/admin/edit-product',
+        product: prod
+      }
+    } else {
+      return res.redirect('/')
+    }
+  }
 
   @Post('/add-product')
   addProduct(@Body() body, @Res() res: Response) {

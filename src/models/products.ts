@@ -4,7 +4,7 @@ export class Products {
   private title: string;
   private imageUrl:string;
   private description:string;
-  private price:number;
+  public price:number;
   private id: string;
   constructor(title: string, imageUrl:string, description:string, price:number) {
     this.title = title;
