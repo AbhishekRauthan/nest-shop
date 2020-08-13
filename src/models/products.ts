@@ -1,11 +1,11 @@
 const products:Products[] = []
 
 export class Products {
-  private title: string;
-  private imageUrl:string;
-  private description:string;
+  public title: string;
+  public imageUrl:string;
+  public description:string;
   public price:number;
-  private id: string;
+  public id: string;
   constructor(title: string, imageUrl:string, description:string, price:number) {
     this.title = title;
     this.imageUrl = imageUrl;
@@ -16,6 +16,12 @@ export class Products {
   save() {
     this.id = Math.random().toString();
     products.push(this);
+  }
+
+  static update(id:string, product:Products) {
+    const existingProductIndex = products.findIndex(p => p.id === id);
+    console.log(product);
+    products[existingProductIndex] = product;
   }
 
   static fetchAll() {

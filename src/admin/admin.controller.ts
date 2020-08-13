@@ -30,9 +30,9 @@ export class AdminController {
 
   @Get('/edit-product/:productId')
   @Render('admin/edit-product')
-  editProductPage(@Param('productId') prodId:string, @Res() res:Response) {
+  editProductPage(@Param('productId') prodId: string, @Res() res: Response) {
     const prod = Products.getById(prodId);
-    if(prod){
+    if (prod) {
       return {
         pageTitle: 'Edit Product',
         path: '/admin/edit-product',
@@ -41,6 +41,13 @@ export class AdminController {
     } else {
       return res.redirect('/')
     }
+  }
+
+  @Post('/edit-product')
+  updateProduct(@Body() body, @Res() res: Response) {
+    const prod:Products = body;
+    Products.update(prod.id, prod);
+    res.redirect('/');
   }
 
   @Post('/add-product')
