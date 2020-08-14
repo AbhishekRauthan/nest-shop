@@ -45,15 +45,16 @@ export class AdminController {
 
   @Post('/edit-product')
   updateProduct(@Body() body, @Res() res: Response) {
-    const prod:Products = body;
-    Products.update(prod.id, prod);
+    const { id, title, imageUrl, description, price } = body;
+    const prod = new Products(id,title, imageUrl, description, price);
+    prod.save();
     res.redirect('/');
   }
 
   @Post('/add-product')
   addProduct(@Body() body, @Res() res: Response) {
     const { title, imageUrl, description, price } = body;
-    const product = new Products(title, imageUrl, description, price);
+    const product = new Products(null, title, imageUrl, description, price);
     product.save();
     res.redirect('/');
   }

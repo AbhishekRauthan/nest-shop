@@ -1,12 +1,13 @@
-const products:Products[] = []
+let products: Products[] = []
 
 export class Products {
-  public title: string;
-  public imageUrl:string;
-  public description:string;
-  public price:number;
+  public title: string | null;
+  public imageUrl: string;
+  public description: string;
+  public price: number;
   public id: string;
-  constructor(title: string, imageUrl:string, description:string, price:number) {
+  constructor(id: string | null, title: string, imageUrl: string, description: string, price: number) {
+    this.id = id;
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
@@ -14,21 +15,23 @@ export class Products {
   }
 
   save() {
-    this.id = Math.random().toString();
-    products.push(this);
-  }
-
-  static update(id:string, product:Products) {
-    const existingProductIndex = products.findIndex(p => p.id === id);
-    console.log(product);
-    products[existingProductIndex] = product;
+    if (this.id) {
+      const existingProductIndex = products.findIndex(p => p.id == this.id);
+      console.log(existingProductIndex);
+      const updatedProds = [...products]
+      updatedProds[existingProductIndex] = this;
+      products = [...updatedProds]
+    } else {
+      this.id = Math.random().toString();
+      products.push(this);
+    }
   }
 
   static fetchAll() {
     return products;
   }
-  
-  static getById(id:string) {
+
+  static getById(id: string) {
     return products.find(prod => prod.id === id);
   }
 }
