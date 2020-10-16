@@ -20,8 +20,12 @@ export class Cart {
     cart.totalPrice = cart.totalPrice + +prodPrice;
   }
 
-  static delete(id:string, price:number) {
-    
+  static delete(id: string, price: number) {
+    const product = cart.products.find(p => p.id === id);
+    const productQty = product.qty;
+    cart.totalPrice = cart.totalPrice - (productQty * price);
+    cart.products = cart.products.filter(p => p.id !== id);
+    console.log(cart);
   }
 }
 
