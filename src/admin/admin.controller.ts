@@ -46,8 +46,16 @@ export class AdminController {
   @Post('/edit-product')
   updateProduct(@Body() body, @Res() res: Response) {
     const { id, title, imageUrl, description, price } = body;
-    const prod = new Products(id,title, imageUrl, description, price);
+    const prod = new Products(id, title, imageUrl, description, price);
     prod.save();
+    res.redirect('/');
+  }
+
+  @Post('/delete-product')
+  deleteProduct(@Body() body, @Res() res: Response) {
+    console.log("inside deleteProduct");
+    const id = body.productId;
+    Products.delete(id);
     res.redirect('/');
   }
 

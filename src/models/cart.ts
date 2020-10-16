@@ -19,6 +19,10 @@ export class Cart {
     }
     cart.totalPrice = cart.totalPrice + +prodPrice;
   }
+
+  static delete(id:string, price:number) {
+    
+  }
 }
 
 interface Prod {

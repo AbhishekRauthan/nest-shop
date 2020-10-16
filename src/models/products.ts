@@ -1,11 +1,11 @@
 let products: Products[] = []
 
 export class Products {
-  public title: string | null;
+  public title: string;
   public imageUrl: string;
   public description: string;
   public price: number;
-  public id: string;
+  public id: string | null;
   constructor(id: string | null, title: string, imageUrl: string, description: string, price: number) {
     this.id = id;
     this.title = title;
@@ -16,7 +16,7 @@ export class Products {
 
   save() {
     if (this.id) {
-      const existingProductIndex = products.findIndex(p => p.id == this.id);
+      const existingProductIndex = products.findIndex(p => +p.id === +this.id);
       console.log(existingProductIndex);
       const updatedProds = [...products]
       updatedProds[existingProductIndex] = this;
@@ -29,6 +29,10 @@ export class Products {
 
   static fetchAll() {
     return products;
+  }
+
+  static delete(id: string) {
+    products = products.filter(p => id !== p.id)
   }
 
   static getById(id: string) {
