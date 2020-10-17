@@ -1,3 +1,5 @@
+import { Products } from "./products";
+
 let cart: Cart = { products: [], totalPrice: 0 }
 
 export class Cart {
@@ -34,5 +36,10 @@ export class Cart {
 
 interface Prod {
   id: string;
+  qty: number;
+}
+
+export interface RenderCart {
+  product: Products;
   qty: number;
 }
