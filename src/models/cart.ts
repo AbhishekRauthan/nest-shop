@@ -25,7 +25,10 @@ export class Cart {
     const productQty = product.qty;
     cart.totalPrice = cart.totalPrice - (productQty * price);
     cart.products = cart.products.filter(p => p.id !== id);
-    console.log(cart);
+  }
+
+  static getCart() {
+    return cart;
   }
 }
 

@@ -1,6 +1,6 @@
 import { Controller, Get, Render, Param, Post, Body, Res } from '@nestjs/common';
 import { Products } from 'src/models/products';
-import {Cart} from 'src/models/cart'
+import { Cart } from 'src/models/cart'
 import { Response } from 'express';
 
 @Controller('')
@@ -43,14 +43,25 @@ export class ShopController {
   @Get('cart')
   @Render('shop/cart')
   getCart() {
+    const cartProds = Cart.getCart().products;
+    const prods = Products.fetchAll();
+    let renderProds: Products[];
+    for (let i = 0; i < cartProds.length; i++) {
+      for (let j = 0; j < prods.length; j++) {
+        if (cartProds[i].id === prods[j].id) {
+          renderProds.push(prods[i]);
+        }
+      }
+    }
     return {
       pageTitle: 'Your Cart',
-      path: '/cart'
+      path: '/cart',
+      products: renderProds
     }
   }
 
   @Post('cart')
-  addToCart(@Body('productId') id: string, @Res() res:Response) {
+  addToCart(@Body('productId') id: string, @Res() res: Response) {
     const product = Products.getById(id);
     Cart.addToCart(id, product.price);
     res.redirect('/cart');
