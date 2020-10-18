@@ -46,7 +46,7 @@ export class ShopController {
     console.log("inside getCart");
     const cartProds = Cart.getCart().products;
     const prods = Products.fetchAll();
-    let renderProds: RenderCart[];
+    let renderProds: RenderCart[] = [];
     for (let i = 0; i < cartProds.length; i++) {
       for (let j = 0; j < prods.length; j++) {
         if (cartProds[i].id === prods[j].id) {
@@ -57,7 +57,15 @@ export class ShopController {
     return {
       pageTitle: 'Your Cart',
       path: '/cart',
+      products: renderProds
     }
+  }
+
+  @Post('/cart-delete-item')
+  deleteFromCart(@Body('productId') id: string, @Res() res: Response) {
+    const product = Products.getById(id);
+    Cart.delete(id, product.price);
+    res.redirect('/cart');
   }
 
   @Post('cart')
