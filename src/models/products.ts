@@ -1,41 +1,23 @@
-let products: Products[] = []
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-export class Products {
-  public title: string;
-  public imageUrl: string;
-  public description: string;
-  public price: number;
-  public id: string | null;
-  constructor(id: string | null, title: string, imageUrl: string, description: string, price: number) {
-    this.id = id;
-    this.title = title;
-    this.imageUrl = imageUrl;
-    this.description = description;
-    this.price = price;
-  }
+export type ProductDocument = Product & Document;
 
-  save() {
-    if (this.id) {
-      const existingProductIndex = products.findIndex(p => +p.id === +this.id);
-      console.log(existingProductIndex);
-      const updatedProds = [...products]
-      updatedProds[existingProductIndex] = this;
-      products = [...updatedProds]
-    } else {
-      this.id = Math.random().toString();
-      products.push(this);
-    }
-  }
+@Schema()
+export class Product {
+  @Prop({ required: true })
+  title: string;
 
-  static fetchAll() {
-    return products;
-  }
+  @Prop({ required: true })
+  price: number;
 
-  static delete(id: string) {
-    products = products.filter(p => id !== p.id)
-  }
+  @Prop({ required: true })
+  discription: string;
 
-  static getById(id: string) {
-    return products.find(prod => prod.id === id);
-  }
+  @Prop({ required: true })
+  imageUrl: string;
+
+
 }
+
+export const ProductSchema = SchemaFactory.createForClass(Product);

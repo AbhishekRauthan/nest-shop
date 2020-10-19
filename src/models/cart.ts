@@ -1,45 +1,18 @@
-import { Products } from "./products";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-let cart: Cart = { products: [], totalPrice: 0 }
+export type CartDocument = Cart & Document;
 
+@Schema()
 export class Cart {
-  public products: Prod[];
-  public totalPrice: number;
+  @Prop({ required: true })
+  title: string;
 
-  static addToCart(id: string, prodPrice: number) {
-    const existingProductIndex = cart.products.findIndex(prod => prod.id === id);
-    const existingProduct = cart.products[existingProductIndex];
-    let updatedProduct: Prod;
+  @Prop()
+  age: number;
 
-    if (existingProduct) {
-      updatedProduct = { ...existingProduct };
-      updatedProduct.qty += 1;
-      cart.products[existingProductIndex] = updatedProduct;
-    } else {
-      updatedProduct = { id: id, qty: 1 };
-      cart.products.push(updatedProduct);
-    }
-    cart.totalPrice = cart.totalPrice + +prodPrice;
-  }
-
-  static delete(id: string, price: number) {
-    const product = cart.products.find(p => p.id === id);
-    const productQty = product.qty;
-    cart.totalPrice = cart.totalPrice - (productQty * price);
-    cart.products = cart.products.filter(p => p.id !== id);
-  }
-
-  static getCart() {
-    return cart;
-  }
+  @Prop()
+  breed: string;
 }
 
-interface Prod {
-  id: string;
-  qty: number;
-}
-
-export interface RenderCart {
-  product: Products;
-  qty: number;
-}
+export const CartSchema = SchemaFactory.createForClass(Cart);
